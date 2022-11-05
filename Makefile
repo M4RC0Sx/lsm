@@ -22,3 +22,8 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 clean:
 	find $(BUILDDIR) -type f -name '*.o' -exec rm -f {} +
 	find $(TARGETDIR) -type f ! -name '.gitkeep' -exec rm -f {} +
+
+rebuild: clean all
+
+valgrind: $(EXE)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(EXE)
