@@ -1,3 +1,6 @@
+# Exe file
+bin/lsm
+
 # Prerequisites
 *.d
 
