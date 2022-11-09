@@ -1,12 +1,41 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <dirent.h>
 
 int main(int argc, char *argv[])
 {
+    int option;
+    char *path = NULL;
+    while ((option = getopt(argc, argv, "a")) != -1)
+    {
+        switch (option)
+        {
+        case 'a':
+            printf("OPTION a\n");
+            break;
+        default:
+            break;
+        }
+    }
+
+    path = argv[optind];
+    if (!path)
+    {
+        fprintf(stderr, "No directory specified!\n");
+        exit(EXIT_FAILURE);
+    }
+
     struct dirent *de;
-    DIR *dr = opendir("/etc");
+    DIR *dr = opendir(path);
+    if (!dr)
+    {
+        perror("There was an error opening the directory");
+        exit(EXIT_FAILURE);
+    }
 
     char *final_msg = malloc(1);
     final_msg[0] = '\0';
