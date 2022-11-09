@@ -31,6 +31,11 @@ int main(int argc, char *argv[])
 
     struct dirent *de;
     DIR *dr = opendir(path);
+    if (!dr)
+    {
+        perror("There was an error opening the directory");
+        exit(EXIT_FAILURE);
+    }
 
     char *final_msg = malloc(1);
     final_msg[0] = '\0';
