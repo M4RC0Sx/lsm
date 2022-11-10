@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     int option;
-    char *path = NULL;
+    char **paths = NULL;
     while ((option = getopt(argc, argv, "a")) != -1)
     {
         switch (option)
@@ -22,36 +22,63 @@ int main(int argc, char *argv[])
         }
     }
 
-    path = argv[optind];
-    if (!path)
+    int num_paths = argc - optind;
+    if (num_paths > 0)
     {
-        fprintf(stderr, "No directory specified!\n");
-        exit(EXIT_FAILURE);
+        paths = malloc(num_paths * sizeof(char *));
+        for (int i = 0; i < num_paths; i++)
+        {
+            paths[i] = argv[optind + i];
+        }
+    }
+    else
+    {
+        paths = malloc(sizeof(char *));
+        paths[0] = ".";
+        num_paths = 1;
     }
 
-    struct dirent *de;
-    DIR *dr = opendir(path);
-    if (!dr)
-    {
-        perror("There was an error opening the directory");
-        exit(EXIT_FAILURE);
-    }
+    // Print paths
+    char *path = NULL;
 
     char *final_msg = malloc(1);
     final_msg[0] = '\0';
-
     int n = 0;
-    while ((de = readdir(dr)) != NULL)
+    for (int i = 0; i < num_paths; i++)
     {
-        // Append the file name to the message
-        n += strlen(de->d_name) + 2;
-        final_msg = realloc(final_msg, n);
-        strcat(final_msg, de->d_name);
-        strcat(final_msg, "\t");
-    }
-    closedir(dr);
+        path = paths[i];
 
-    printf("%s\n", final_msg);
+        struct dirent *de;
+        DIR *dr = opendir(path);
+        if (!dr)
+        {
+            perror("There was an error opening path!");
+            exit(EXIT_FAILURE);
+        }
+
+        n += strlen(path) + 3;
+        final_msg = realloc(final_msg, n);
+        strcat(final_msg, path);
+        strcat(final_msg, ":\n");
+        while ((de = readdir(dr)) != NULL)
+        {
+            // Append the file name to the message
+            n += strlen(de->d_name) + 2;
+            final_msg = realloc(final_msg, n);
+            strcat(final_msg, de->d_name);
+            strcat(final_msg, "\t");
+        }
+        closedir(dr);
+
+        n += 3;
+        final_msg = realloc(final_msg, n);
+        strcat(final_msg, "\n\n");
+    }
+
+    printf("%s", final_msg);
     free(final_msg);
+
+    free(paths);
+
     return 0;
 }
