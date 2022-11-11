@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -10,14 +11,18 @@
 
 int main(int argc, char *argv[])
 {
-    int option;
     lsm_dir_t **dirs = NULL;
+
+    /* Command options */
+    bool opt_display_hidden = false;
+
+    int option;
     while ((option = getopt(argc, argv, "a")) != -1)
     {
         switch (option)
         {
         case 'a':
-            printf("OPTION a\n");
+            opt_display_hidden = true;
             break;
         default:
             break;
