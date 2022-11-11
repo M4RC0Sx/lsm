@@ -69,6 +69,9 @@ int main(int argc, char *argv[])
         strcat(final_msg, ":\n");
         while ((de = readdir(dr)) != NULL)
         {
+            if (!opt_display_hidden && de->d_name[0] == '.')
+                continue;
+
             // Append the file name to the message
             n += strlen(de->d_name) + 2;
             final_msg = realloc(final_msg, n);
