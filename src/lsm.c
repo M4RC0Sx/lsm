@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
     {
         lsm_dir_destroy(dirs[i]);
     }
-
     free(dirs);
 
     return 0;
