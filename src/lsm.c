@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -10,14 +11,18 @@
 
 int main(int argc, char *argv[])
 {
-    int option;
     lsm_dir_t **dirs = NULL;
+
+    /* Command options */
+    bool opt_display_hidden = false;
+
+    int option;
     while ((option = getopt(argc, argv, "a")) != -1)
     {
         switch (option)
         {
         case 'a':
-            printf("OPTION a\n");
+            opt_display_hidden = true;
             break;
         default:
             break;
@@ -64,6 +69,9 @@ int main(int argc, char *argv[])
         strcat(final_msg, ":\n");
         while ((de = readdir(dr)) != NULL)
         {
+            if (!opt_display_hidden && de->d_name[0] == '.')
+                continue;
+
             // Append the file name to the message
             n += strlen(de->d_name) + 2;
             final_msg = realloc(final_msg, n);
