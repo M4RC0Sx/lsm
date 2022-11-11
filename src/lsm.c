@@ -15,14 +15,18 @@ int main(int argc, char *argv[])
 
     /* Command options */
     bool opt_display_hidden = false;
+    bool opt_display_dots = true;
 
     int option;
-    while ((option = getopt(argc, argv, "a")) != -1)
+    while ((option = getopt(argc, argv, "aA")) != -1)
     {
         switch (option)
         {
         case 'a':
             opt_display_hidden = true;
+            break;
+        case 'A':
+            opt_display_dots = false;
             break;
         default:
             break;
@@ -69,7 +73,12 @@ int main(int argc, char *argv[])
         strcat(final_msg, ":\n");
         while ((de = readdir(dr)) != NULL)
         {
+            // Skip hidden files
             if (!opt_display_hidden && de->d_name[0] == '.')
+                continue;
+
+            // Skip . and ..
+            if (!opt_display_dots && (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0))
                 continue;
 
             // Append the file name to the message
