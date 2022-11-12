@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include <dirent.h>
 
 #include "lsm_dir.h"
 
@@ -58,12 +57,9 @@ int main(int argc, char *argv[])
     for (int i = 0; i < num_dirs; i++)
     {
         dir = dirs[i];
-
-        struct dirent *de;
-        DIR *dr = opendir(dir->path_name);
-        if (!dr)
+        if (!lsm_dir_read(dir))
         {
-            perror("There was an error opening path!");
+            perror("Error while reading directory");
             exit(EXIT_FAILURE);
         }
 
@@ -71,23 +67,31 @@ int main(int argc, char *argv[])
         final_msg = realloc(final_msg, n);
         strcat(final_msg, dir->path_name);
         strcat(final_msg, ":\n");
-        while ((de = readdir(dr)) != NULL)
+
+        for (int j = 0; j < dir->num_files; j++)
         {
-            // Skip hidden files
-            if (!opt_display_hidden && de->d_name[0] == '.')
-                continue;
-
-            // Skip . and ..
-            if (!opt_display_dots && (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0))
-                continue;
-
-            // Append the file name to the message
-            n += strlen(de->d_name) + 2;
-            final_msg = realloc(final_msg, n);
-            strcat(final_msg, de->d_name);
-            strcat(final_msg, "\t");
+            lsm_file_t *file = dir->files[j];
+            if (file->type == LSM_DIRECTORY)
+            {
+                if (opt_display_dots || (strcmp(file->name, ".") != 0 && strcmp(file->name, "..") != 0))
+                {
+                    n += strlen(file->name) + 1;
+                    final_msg = realloc(final_msg, n);
+                    strcat(final_msg, file->name);
+                    strcat(final_msg, "\t");
+                }
+            }
+            else if (file->type == LSM_FILE)
+            {
+                if (opt_display_hidden || file->name[0] != '.')
+                {
+                    n += strlen(file->name) + 1;
+                    final_msg = realloc(final_msg, n);
+                    strcat(final_msg, file->name);
+                    strcat(final_msg, "\t");
+                }
+            }
         }
-        closedir(dr);
 
         n += 3;
         final_msg = realloc(final_msg, n);
