@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "lsm_dir.h"
+#include "lsm_file.h"
 
 int main(int argc, char *argv[])
 {
@@ -71,6 +72,7 @@ int main(int argc, char *argv[])
         for (int j = 0; j < dir->num_files; j++)
         {
             lsm_file_t *file = dir->files[j];
+            lsm_file_print(file);
             if (file->type == LSM_DIRECTORY)
             {
                 if (opt_display_dots || (strcmp(file->name, ".") != 0 && strcmp(file->name, "..") != 0))
