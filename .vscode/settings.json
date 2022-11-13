@@ -1,0 +1,15 @@
+{
+    "C_Cpp.default.cStandard": "c17",
+    "files.associations": {
+        "*.tcc": "c",
+        "cstdio": "c",
+        "typeinfo": "c",
+        "array": "c",
+        "functional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c"
+    }
+}
