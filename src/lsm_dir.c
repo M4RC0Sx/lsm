@@ -42,7 +42,7 @@ bool lsm_dir_read(lsm_dir_t *lsm_dir)
     {
 
         char *file_name = de->d_name;
-        char *file_path = (char *)malloc(strlen(lsm_dir->path_name) + strlen(file_name) + 2);
+        char *file_path = malloc(strlen(lsm_dir->path_name) + strlen(file_name) + 2);
         sprintf(file_path, "%s/%s", lsm_dir->path_name, file_name);
 
         lsm_file_t *file = lsm_file_create(file_name, file_path);

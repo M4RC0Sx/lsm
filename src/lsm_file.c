@@ -116,7 +116,7 @@ static char *lsm_file_get_permissions_string(lsm_file_t *lsm_file, struct stat b
     if (lsm_file->type == UNKNOWN)
         return NULL;
 
-    char *perm_str = (char *)malloc((PERM_STR_LEN + 1) * sizeof(char));
+    char *perm_str = malloc((PERM_STR_LEN + 1) * sizeof(char));
     perm_str[0] = (S_ISDIR(buf_st.st_mode)) ? 'd' : '-';
     perm_str[1] = (buf_st.st_mode & S_IRUSR) ? 'r' : '-';
     perm_str[2] = (buf_st.st_mode & S_IWUSR) ? 'w' : '-';
