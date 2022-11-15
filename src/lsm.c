@@ -61,6 +61,12 @@ int main(int argc, char *argv[])
         if (!lsm_dir_read(dir))
         {
             perror("Error while reading directory");
+            for (int i = 0; i < num_dirs; i++)
+            {
+                lsm_dir_destroy(dirs[i]);
+            }
+            free(dirs);
+            free(final_msg);
             exit(EXIT_FAILURE);
         }
 
