@@ -46,7 +46,7 @@ bool lsm_dir_read(lsm_dir_t *lsm_dir)
         sprintf(file_path, "%s/%s", lsm_dir->path_name, file_name);
 
         lsm_file_t *file = lsm_file_create(file_name, file_path);
-        lsm_dir->files = (lsm_file_t **)realloc(lsm_dir->files, sizeof(lsm_file_t *) * (lsm_dir->num_files + 1));
+        lsm_dir->files = realloc(lsm_dir->files, sizeof(lsm_file_t *) * (lsm_dir->num_files + 1));
         lsm_dir->files[lsm_dir->num_files] = file;
         lsm_dir->num_files++;
 
