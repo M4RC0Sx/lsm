@@ -8,6 +8,7 @@
 
 #include "lsm_dir.h"
 #include "lsm_file.h"
+#include "lsm_printer.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,9 +17,10 @@ int main(int argc, char *argv[])
     /* Command options */
     bool opt_display_hidden = false;
     bool opt_display_dots = true;
+    bool opt_display_long_list = false; // -l
 
     int option;
-    while ((option = getopt(argc, argv, "aA")) != -1)
+    while ((option = getopt(argc, argv, "aAl")) != -1)
     {
         switch (option)
         {
@@ -27,6 +29,9 @@ int main(int argc, char *argv[])
             break;
         case 'A':
             opt_display_dots = false;
+            break;
+        case 'l':
+            opt_display_long_list = true;
             break;
         default:
             break;
@@ -108,6 +113,11 @@ int main(int argc, char *argv[])
 
     printf("%s", final_msg);
     free(final_msg);
+
+    if (opt_display_long_list)
+    {
+        lsm_printer_display_long_list_output(opt_display_hidden, opt_display_dots, dirs, num_dirs);
+    }
 
     for (int i = 0; i < num_dirs; i++)
     {
