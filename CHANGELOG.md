@@ -1,5 +1,20 @@
 # lsm - Changelog
 
+## [1.1.0](https://github.com/M4RC0Sx/lsm/compare/v1.0.0...v1.1.0) (2022-11-16)
+
+
+### Features
+
+* added -l option ([a21f47e](https://github.com/M4RC0Sx/lsm/commit/a21f47e512b756a9002f19dba45654843824e5ac))
+* added -l option, closes [#17](https://github.com/M4RC0Sx/lsm/issues/17) ([46703b1](https://github.com/M4RC0Sx/lsm/commit/46703b159b2557462a49afb8714fa95ade9b1bf5))
+* **lsm_file:** handle is_hidden and is_dot properties ([4046b96](https://github.com/M4RC0Sx/lsm/commit/4046b9692b322c60c9127bbf3d6dd18e79ba503c))
+* **lsm_printer:** pretty display function for -l option, closes [#18](https://github.com/M4RC0Sx/lsm/issues/18) ([23b4895](https://github.com/M4RC0Sx/lsm/commit/23b4895cfb11d7a803af49fd98f1cf08d53e7db9))
+
+
+### Bug Fixes
+
+* **memory-leak:** free resources before exit_failure, closes [#16](https://github.com/M4RC0Sx/lsm/issues/16) ([cff3baf](https://github.com/M4RC0Sx/lsm/commit/cff3bafcf36746a71aef92cf5ac8d77a082b2407))
+
 ## 1.0.0 (2022-11-13)
 
 
