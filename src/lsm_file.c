@@ -28,12 +28,13 @@ lsm_file_t *lsm_file_create(char *file_name, char *file_path)
 
     /* File stats initialization */
     file->extension = NULL;
+    file->is_hidden = false;
+    file->is_dot = false;
     file->owner = NULL;
     file->group = NULL;
     file->size = 0;
     file->last_modified_timestamp = 0;
     file->perms_str = NULL;
-    file->hard_links_count = 0;
 
     lsm_file_load_stats(file);
     return file;
@@ -60,6 +61,8 @@ static void lsm_file_load_stats(lsm_file_t *lsm_file)
 
     lsm_file->type = lsm_file_get_type(buf_st);
     lsm_file->extension = lsm_file_get_ext(lsm_file);
+    lsm_file->is_hidden = lsm_file->name[0] == '.';
+    lsm_file->is_dot = strcmp(lsm_file->name, ".") == 0 || strcmp(lsm_file->name, "..") == 0;
     lsm_file->owner = lsm_file_get_owner(lsm_file, buf_st);
     lsm_file->group = lsm_file_get_group(lsm_file, buf_st);
     lsm_file->size = buf_st.st_size;

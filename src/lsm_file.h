@@ -1,6 +1,7 @@
 #ifndef _LSM_FILE_H_
 #define _LSM_FILE_H_
 
+#include <stdbool.h>
 #include <time.h>
 
 typedef enum
@@ -16,6 +17,8 @@ typedef struct
     char *path;
     lsm_file_type_t type;
     char *extension;
+    bool is_hidden;
+    bool is_dot;
     char *owner;
     char *group;
     long size;
