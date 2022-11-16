@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     /* Command options */
     bool opt_display_hidden = false;
     bool opt_display_dots = true;
-    bool opt_display_long_list = false;
+    bool opt_display_long_list = false; // -l
 
     int option;
     while ((option = getopt(argc, argv, "aAl")) != -1)
