@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "lsm_macros.h"
 #include "lsm_dir.h"
 #include "lsm_file.h"
 
@@ -45,9 +46,11 @@ void lsm_printer_display_long_list_output(bool opt_display_hidden, bool opt_disp
             last_modified_timestamp[strlen(last_modified_timestamp) - 1] = '\0'; // Remove newline character
             char *name = file->name;
 
-            int file_msg_len = snprintf(NULL, 0, "%s %*d %*s %*s %*ld %*s %s\n", perms_str, len_hard_links_count, hard_links_count, len_owner, owner, len_group, group, len_size, size, len_last_modified_timestamp, last_modified_timestamp, name);
+            char *icon = file->type == LSM_DIRECTORY ? LSM_ICON_DIR : LSM_ICON_FILE;
+
+            int file_msg_len = snprintf(NULL, 0, "%s %*d %*s %*s %*ld %*s %s %s\n", perms_str, len_hard_links_count, hard_links_count, len_owner, owner, len_group, group, len_size, size, len_last_modified_timestamp, last_modified_timestamp, icon, name);
             char *file_msg = malloc(file_msg_len + 1);
-            snprintf(file_msg, file_msg_len + 1, "%s %*d %*s %*s %*ld %*s %s\n", perms_str, len_hard_links_count, hard_links_count, len_owner, owner, len_group, group, len_size, size, len_last_modified_timestamp, last_modified_timestamp, name);
+            snprintf(file_msg, file_msg_len + 1, "%s %*d %*s %*s %*ld %*s %s %s\n", perms_str, len_hard_links_count, hard_links_count, len_owner, owner, len_group, group, len_size, size, len_last_modified_timestamp, last_modified_timestamp, icon, name);
 
             final_msg_len += file_msg_len;
             final_msg = realloc(final_msg, final_msg_len + 1);
