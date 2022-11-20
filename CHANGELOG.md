@@ -1,5 +1,13 @@
 # lsm - Changelog
 
+## [1.2.0](https://github.com/M4RC0Sx/lsm/compare/v1.1.0...v1.2.0) (2022-11-20)
+
+
+### Features
+
+* added macros file for better handling ([a066d04](https://github.com/M4RC0Sx/lsm/commit/a066d04eb8c2461db1af17f6506ac9f450744837))
+* **lsm_printer:** display icons based on file type, closes [#21](https://github.com/M4RC0Sx/lsm/issues/21) ([547fad5](https://github.com/M4RC0Sx/lsm/commit/547fad55f20a6c668e39fb131d14195407b009b9))
+
 ## [1.1.0](https://github.com/M4RC0Sx/lsm/compare/v1.0.0...v1.1.0) (2022-11-16)
 
 
